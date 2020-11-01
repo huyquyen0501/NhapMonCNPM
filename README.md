@@ -1,3 +1,15 @@
+Mỗi người nhận task nào trên jira thì tự assign mình vào, sau đấy tạo nhánh tên giống task đã nhận, khi code xong thì đẩy lên rồi merge vào nhánh qa rồi kéo code sang nhánh code review.
+
+Tester tương tự test task trên cột code review sang testing, test không thấy lỗi thì kéo sang done, có bug thì note ở comment lại rồi kéo sang todo.
+
+Hàng ngày pull code từ qa về tránh conflict.
+
+Khi merge code thì merge vào nhánh qa, tester pull code từ nhánh qa về test.
+
+link jira: https://bbqhotpot.atlassian.net/
+
+
+
 # Important
 
 Issues of this repository are tracked on https://github.com/aspnetboilerplate/aspnetboilerplate. Please create your issues on https://github.com/aspnetboilerplate/aspnetboilerplate/issues.
