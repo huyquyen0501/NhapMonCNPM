@@ -11,6 +11,7 @@ namespace NhapMonCNPM.Web
     /// </summary>
     public static class WebContentDirectoryFinder
     {
+        public static string RootFolder;
         public static string CalculateContentRootFolder()
         {
             var coreAssemblyDirectoryPath = Path.GetDirectoryName(typeof(NhapMonCNPMCoreModule).GetAssembly().Location);

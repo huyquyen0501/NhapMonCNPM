@@ -12,5 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\NhapMonCNPM.Core\NhapMonCNPM.Core.csproj" />
+    <ProjectReference Include="..\NhapMonCNPM.EntityFrameworkCore\NhapMonCNPM.EntityFrameworkCore.csproj" />
   </ItemGroup>
 </Project>

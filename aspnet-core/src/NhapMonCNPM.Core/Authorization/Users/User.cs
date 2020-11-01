@@ -8,6 +8,9 @@ namespace NhapMonCNPM.Authorization.Users
     public class User : AbpUser<User>
     {
         public const string DefaultPassword = "123qwe";
+        public string CMT { get; set; }
+        public string SoDienThoai { get; set; }
+        public string TelegramUrl { get; set; }
 
         public static string CreateRandomPassword()
         {

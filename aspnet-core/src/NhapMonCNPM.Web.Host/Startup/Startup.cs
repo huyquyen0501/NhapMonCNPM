@@ -17,6 +17,9 @@ using NhapMonCNPM.Identity;
 
 using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.AspNetCore.Mvc;
+using NhapMonCNPM.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using NhapMonCNPM.Constants;
 
 namespace NhapMonCNPM.Web.Host.Startup
 {
@@ -59,8 +62,12 @@ namespace NhapMonCNPM.Web.Host.Startup
                         .AllowAnyMethod()
                         .AllowCredentials()
                 )
+               
             );
-
+            ConstantVarible.RootUrl = _appConfiguration.GetSection("App")["ServerRootAddress"];
+            ConstantVarible.wwwRootFolder = _appConfiguration.GetValue<string>("RootFolder");
+            services.AddDbContext<NhapMonCNPMDbContext>(options =>
+                   options.UseSqlServer(_appConfiguration.GetConnectionString("Default")));
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             services.AddSwaggerGen(options =>
             {
