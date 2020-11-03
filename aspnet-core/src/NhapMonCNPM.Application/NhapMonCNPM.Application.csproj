@@ -11,6 +11,9 @@
     <RootNamespace>NhapMonCNPM</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\NhapMonCNPM.Core\NhapMonCNPM.Core.csproj" />
     <ProjectReference Include="..\NhapMonCNPM.EntityFrameworkCore\NhapMonCNPM.EntityFrameworkCore.csproj" />
   </ItemGroup>
