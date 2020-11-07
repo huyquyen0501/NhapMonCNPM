@@ -1,0 +1,81 @@
+<div [@routerTransition]>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <h1>Quản lý món ăn</h1>
+                </div>
+                <div class="col-6 text-right">
+                    <button class="btn-add" (click)="add()">Thêm mới</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content px-2 search">
+        <div class="container-fluid">
+            <div class="card">
+                <form>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Tên món ăn</label>
+                            <input [(ngModel)]="tenMonAn" name="tenMonAn" type="text">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Đơn giá</label>
+                            <input [(ngModel)]="donGia" name="donGia" type="text">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Nguyên liệu</label>
+                            <input [(ngModel)]="nguyenLieu" name="nguyenLieu" type="text">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn-search" (click)="search()">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="card">
+                <h2 class="title">Danh sách món ăn</h2>
+                <div class="card-body table-responsive p-0">
+                    <table>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên món ăn</th>
+                            <th>Đơn giá</th>
+                            <th>Nguyên liệu</th>
+                            <th>Hình ảnh</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        <tr
+                            *ngFor="let data of (dsMonAn |paginate: {id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems}); let index = index">
+                            <td>{{index + 1 + (pageNumber - 1) * pageSize}}</td>
+                            <td>{{data.tenMonan}}</td>
+                            <td>{{data.giaMon}}</td>
+                            <td>
+                                {{data.danhsachNguyenLieu}}
+                            </td>
+                            <td>
+                                <img src="{{data.hinhAnh}}" height="50px" alt="">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary" (click)="edit()">
+                                    <i class="fas fa-cogs"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- <div class="pagination">
+                        <div class="pagination">
+                            <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
+                            </abp-pagination-controls>
+                        </div>
+                    </div> -->
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

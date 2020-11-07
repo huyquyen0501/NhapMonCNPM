@@ -38,6 +38,8 @@ import { SidebarComponent } from './layout/sidebar.component';
 import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
+import { QuanLyMonAnComponent } from './quan-ly-mon-an/quan-ly-mon-an.component';
+import { AddEditMonComponent } from './quan-ly-mon-an/add-edit-mon/add-edit-mon.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     SidebarComponent,
     SidebarLogoComponent,
     SidebarUserPanelComponent,
-    SidebarMenuComponent
+    SidebarMenuComponent,
+    QuanLyMonAnComponent,
+    AddEditMonComponent
   ],
   imports: [
     CommonModule,
