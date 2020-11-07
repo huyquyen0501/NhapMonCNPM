@@ -13,9 +13,9 @@ import { AddEditMonComponent } from './add-edit-mon/add-edit-mon.component';
 })
 export class QuanLyMonAnComponent extends PagedListingComponentBase<any> implements OnInit {
 
-  tenMonAn:any = '';
-  donGia:any  = '';
-  nguyenLieu:any  = '';
+  tenMonAn: any = '';
+  donGia: any = '';
+  nguyenLieu: any = '';
   dsMonAn: any;
   bsModalRef: BsModalRef;
 
@@ -23,7 +23,7 @@ export class QuanLyMonAnComponent extends PagedListingComponentBase<any> impleme
     private api: QuanLyMonAnService,
     private inject: Injector,
     private modalService: BsModalService
-  ) { 
+  ) {
     super(inject)
   }
 
@@ -34,19 +34,19 @@ export class QuanLyMonAnComponent extends PagedListingComponentBase<any> impleme
   list(
     request: PagedRequestDto,
     pageNumber: number,
-  ){
+  ) {
     let input = {
       gridParam: request,
       tenMonan: this.tenMonAn,
       dongia: this.donGia,
       nguyenlieu: this.nguyenLieu
     }
-    this.api.getMonAn(input).subscribe(data=>{
+    this.api.getMonAn(input).subscribe(data => {
       this.dsMonAn = data.result.items;
     })
   }
 
-  add(){
+  add() {
     const initialState = {
       title: 'Thêm món ăn'
     };
@@ -54,20 +54,21 @@ export class QuanLyMonAnComponent extends PagedListingComponentBase<any> impleme
     this.bsModalRef.content.closeBtnName = 'Close';
   }
 
-  edit(){
+  edit(data) {
     const initialState = {
-      title: 'Sửa món ăn'
+      title: 'Sửa món ăn: ' + data.tenMonan,
+      detailMonAn: data
     };
     this.bsModalRef = this.modalService.show(AddEditMonComponent, { initialState });
     this.bsModalRef.content.closeBtnName = 'Close';
-    // this.bsModalRef.content.event.subscribe(data => {
-    //   this.refresh();
-    // });
+    this.bsModalRef.content.event.subscribe(data => {
+      this.refresh();
+    });
   }
 
-  delete(){}
-  
-  search(){
+  delete() { }
+
+  search() {
     this.refresh();
   }
 }

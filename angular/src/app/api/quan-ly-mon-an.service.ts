@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class QuanLyMonAnService extends BaseApiService{
+export class QuanLyMonAnService extends BaseApiService {
   constructor(http: HttpClient) {
     super(http);
   }
@@ -14,13 +14,13 @@ export class QuanLyMonAnService extends BaseApiService{
     return 'QuanlyMonan';
   }
 
-  getMonAn(input: any):Observable<any>{
+  getMonAn(input: any): Observable<any> {
     return this.http.post(this.rootUrl + '/DanhSachMonAn', input)
   }
-  Sua(input: any):Observable<any>{
+  Sua(input: FormData): Observable<any> {
     return this.http.post(this.rootUrl + '/SuaMonAn', input)
   }
-  Add(input: any):Observable<any>{
+  Add(input: FormData): Observable<any> {
     return this.http.post(this.rootUrl + '/ThemMonAn', input)
   }
 }

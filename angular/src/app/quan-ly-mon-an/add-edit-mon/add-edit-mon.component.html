@@ -1,18 +1,18 @@
 <div style="padding: 20px;">
     <h4>{{title}}</h4>
     <hr>
-    <form>
+    <form [formGroup]="formAdd">
         <div style="margin-bottom: 10px;">
             <label>Tên món ăn</label>
-            <input [(ngModel)]="tenMonAn" type="text" name="ff" style="width: 100%;">
+            <input formControlName="TenMonAn" type="text" name="ff" style="width: 100%;">
         </div>
         <div style="margin-bottom: 10px;">
             <label>Đơn giá</label>
-            <input [(ngModel)]="donGia" type="number" name="ff" style="width: 100%;">
+            <input formControlName="DonGia" type="number" name="ff" style="width: 100%;">
         </div>
         <div style="margin-bottom: 10px;">
             <label>Nguyên liệu</label>
-            <select [(ngModel)]="nguyenLieu" name="ff" id="" style="width: 100%; height: 30px;">
+            <select formControlName="DanhsachNguyenlieu" name="ff" id="" style="width: 100%; height: 30px;">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -20,14 +20,25 @@
         </div>
         <div style="margin-bottom: 10px;">
             <label>Đơn vị</label>
-            <select [(ngModel)]="nguyenLieu" [ngModelOptions]="{standalone: true}" style="width: 100%; height: 30px;">
+            <select formControlName="DonViTinh" style="width: 100%; height: 30px;">
                 <option *ngFor="let dv of dsDV" [value]="dv.value">{{dv.text}}</option>
             </select>
         </div>
+        <div style="margin-bottom: 10px; width: 50%;">
+            <img width="100%" [src]="domFile.bypassSecurityTrustUrl(imgsrc)" alt="">
+            <div class=" border text-center border-top-0 bg-light">
+                <label class="px-2 mb-0" style="cursor: pointer;" (change)="fileChange($event)">
+                    <i class="fas fa-camera fa-2x"></i>
+                    <input type="file" style="display: none;"
+                        accept=" .bmp, .dib, .png, .jfif, .pjpeg, .jpeg, .pjp, .jpg, .gif">
+                </label>
+            </div>
+        </div>
         <div style="margin-top: 30px; display: flex; justify-content: flex-end; align-items: center;">
-            <button
+            <button (click)="bsModalRef.hide()"
                 style="padding: 6px 20px ;border: none ;background: #ddd; color: black; margin-right: 6px ;">Đóng</button>
-            <button style="padding: 6px 20px ;border: none ;background: blue;color: white;" (click)="save()">Lưu</button>
+            <button style="padding: 6px 20px ;border: none ;background: blue;color: white;"
+                (click)="save()">Lưu</button>
         </div>
     </form>
 </div>
