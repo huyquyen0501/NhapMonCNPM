@@ -12,6 +12,8 @@ using Abp.Collections.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
+using NhapMonCNPM.Helper.MyUploadFile;
+using NhapMonCNPM.Constants;
 
 namespace NhapMonCNPM.QuanlyMonAn
 {
@@ -37,7 +39,7 @@ namespace NhapMonCNPM.QuanlyMonAn
         }
 
 
-        public async Task ThemMonAn(ThemMonan input)
+        public async Task ThemMonAn([FromForm]ThemMonan input)
         {
             var resual = new MonAn
             {
@@ -45,6 +47,11 @@ namespace NhapMonCNPM.QuanlyMonAn
                 DonGia = input.DonGia,
                 DonViTinh = input.DonViTinh,
             };
+           
+            string fileLocation = UploadFile.CreateFolderIfNotExists(ConstantVarible.wwwRootFolder, "Images");
+            
+            string fileName = await UploadFile.UploadAsync(fileLocation, input.HinhAnh);
+            resual.HinhAnh = $"{ConstantVarible.RootUrl}Images/{fileName}";
             var id = await WorkScope.InsertAndGetIdAsync(resual);
             var chitietMonan = new List<ChiTietMonAn>();
             foreach (var i in input.DanhsachNguyenlieu)
@@ -68,13 +75,15 @@ namespace NhapMonCNPM.QuanlyMonAn
 
         }
 
-        public async Task SuaMonAn(SuaMonAn input)
+        public async Task SuaMonAn([FromForm]SuaMonAn input)
         {
             var MonAn = await WorkScope.GetAll<MonAn>().Where(s => s.Id == input.id).FirstOrDefaultAsync();
             MonAn.TenMonAn = input.TenMonAn;
             MonAn.DonGia = input.DonGia;
             MonAn.DonViTinh = input.DonViTinh;
-
+            string fileLocation = UploadFile.CreateFolderIfNotExists(ConstantVarible.wwwRootFolder, "Images");
+            string fileName = await UploadFile.UploadAsync(fileLocation, input.HinhAnh);
+            MonAn.HinhAnh = $"{ConstantVarible.RootUrl}Images/{fileName}";
             await WorkScope.UpdateAsync(MonAn);
 
             var ChitietMonAnOldData = await WorkScope.GetAll<ChiTietMonAn>().Where(s => s.MaMonAn == input.id)
