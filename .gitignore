@@ -7,3 +7,4 @@ bin/
 aspnet-core/src/NhapMonCNPM.Web.Host/App_Data/Logs/
 aspnet-core/src/NhapMonCNPM.Web.Mvc/App_Data/Logs/
 aspnet-core/src/NhapMonCNPM.Migrator/Logs/Logs.txt
+/aspnet-core/src/NhapMonCNPM.Web.Host/wwwroot/Images
