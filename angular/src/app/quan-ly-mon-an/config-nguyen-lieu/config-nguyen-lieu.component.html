@@ -1,0 +1,18 @@
+<div style="padding: 20px;" *ngIf="dsNguyenLieu">
+    <h4>Thêm/sửa nguyên liệu</h4>
+    <hr>
+    <div style="margin-top: 30px;" *ngFor="let data of dsNguyenLieu">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <input type="checkbox" />
+                {{data.tenNguyenLieu}}
+            </div>
+            <input style="width: 80%;" type="number" placeholder="Nhập Số lượng">
+        </div>
+    </div>
+    <div style="margin-top: 30px; display: flex; justify-content: flex-end; align-items: center;">
+        <button style="padding: 6px 20px ;border: none ;background: #ddd; color: black; margin-right: 6px ;"
+            (click)="bsModalRef.hide()">Đóng</button>
+        <button style="padding: 6px 20px ;border: none ;background: blue;color: white;" (click)="save()">Lưu</button>
+    </div>
+</div>

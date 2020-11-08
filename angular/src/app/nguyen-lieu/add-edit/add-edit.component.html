@@ -1,0 +1,24 @@
+<div style="padding: 20px;">
+    <h4>{{title}}</h4>
+    <hr>
+    <form [formGroup]="formAdd">
+        <div style="margin-bottom: 10px;">
+            <label>Tên nguyên liệu</label>
+            <input type="text" formControlName="tenNguyenLieu" name="ff" style="width: 100%;">
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label>Số lượng</label>
+            <input type="number" formControlName="soLuong" name="ff" style="width: 100%;">
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label>Đơn giá</label>
+            <input type="number" formControlName="donGia" name="ff" style="width: 100%;">
+        </div>
+        <div style="margin-top: 30px; display: flex; justify-content: flex-end; align-items: center;">
+            <button style="padding: 6px 20px ;border: none ;background: #ddd; color: black; margin-right: 6px ;"
+                (click)="bsModalRef.hide()">Đóng</button>
+            <button style="padding: 6px 20px ;border: none ;background: blue;color: white;"
+                (click)="save()">Lưu</button>
+        </div>
+    </form>
+</div>

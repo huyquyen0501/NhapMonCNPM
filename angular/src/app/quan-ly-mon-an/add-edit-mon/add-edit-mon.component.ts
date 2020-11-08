@@ -76,7 +76,9 @@ export class AddEditMonComponent implements OnInit {
     formData.append('donViTinh', this.formAdd.value.DonViTinh);
     formData.append('danhsachNguyenlieu', this.formAdd.value.DanhsachNguyenlieu);
     formData.append('HinhAnh', this.file);
+    formData.append('DanhsachNguyenlieu', '')
     if (this.detailMonAn) {
+      formData.append('id', this.detailMonAn.id);
       this.api.Sua(formData).subscribe(() => {
         abp.message.success('Sửa thành công')
         this.event.emit({ data: 'ok' });

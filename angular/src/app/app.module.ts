@@ -40,6 +40,9 @@ import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { QuanLyMonAnComponent } from './quan-ly-mon-an/quan-ly-mon-an.component';
 import { AddEditMonComponent } from './quan-ly-mon-an/add-edit-mon/add-edit-mon.component';
+import { NguyenLieuComponent } from './nguyen-lieu/nguyen-lieu.component';
+import { AddEditComponent } from './nguyen-lieu/add-edit/add-edit.component';
+import { ConfigNguyenLieuComponent } from './quan-ly-mon-an/config-nguyen-lieu/config-nguyen-lieu.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +74,10 @@ import { AddEditMonComponent } from './quan-ly-mon-an/add-edit-mon/add-edit-mon.
     SidebarUserPanelComponent,
     SidebarMenuComponent,
     QuanLyMonAnComponent,
-    AddEditMonComponent
+    AddEditMonComponent,
+    NguyenLieuComponent,
+    AddEditComponent,
+    ConfigNguyenLieuComponent
   ],
   imports: [
     CommonModule,
@@ -102,4 +108,4 @@ import { AddEditMonComponent } from './quan-ly-mon-an/add-edit-mon/add-edit-mon.
     ResetPasswordDialogComponent,
   ],
 })
-export class AppModule {}
+export class AppModule { }

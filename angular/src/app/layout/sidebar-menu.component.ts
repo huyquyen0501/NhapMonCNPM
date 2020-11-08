@@ -68,6 +68,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         'fas fa-hamburger',
         ''
       ),
+      new MenuItem(
+        this.l('Quản lý nguyên liệu'),
+        '/app/nguyen-lieu',
+        'fas fa-bacon',
+        ''
+      ),
     ];
   }
 

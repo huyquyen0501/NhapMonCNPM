@@ -10,21 +10,13 @@
             <label>Đơn giá</label>
             <input formControlName="DonGia" type="number" name="ff" style="width: 100%;">
         </div>
-        <div style="margin-bottom: 10px;">
-            <label>Nguyên liệu</label>
-            <select formControlName="DanhsachNguyenlieu" name="ff" id="" style="width: 100%; height: 30px;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-        </div>
-        <div style="margin-bottom: 10px;">
+        <div style="margin-bottom: 20px;">
             <label>Đơn vị</label>
             <select formControlName="DonViTinh" style="width: 100%; height: 30px;">
                 <option *ngFor="let dv of dsDV" [value]="dv.value">{{dv.text}}</option>
             </select>
         </div>
-        <div style="margin-bottom: 10px; width: 50%;">
+        <div style="margin-bottom: 20px; width: 50%;">
             <img width="100%" [src]="domFile.bypassSecurityTrustUrl(imgsrc)" alt="">
             <div class=" border text-center border-top-0 bg-light">
                 <label class="px-2 mb-0" style="cursor: pointer;" (change)="fileChange($event)">
