@@ -47,7 +47,7 @@ export class AddEditMonComponent implements OnInit {
       this.formAdd = this.fb.group({
         TenMonAn: [this.detailMonAn.tenMonan],
         DonGia: [this.detailMonAn.giaMon],
-        DonViTinh: ['', Validators.required],
+        DonViTinh: [this.detailMonAn.donViTinh, Validators.required],
         DanhsachNguyenlieu: ['', Validators.required],
       })
       if (this.detailMonAn.hinhAnh != null) {
@@ -73,8 +73,8 @@ export class AddEditMonComponent implements OnInit {
     const formData = new FormData();
     formData.append('tenMonAn', this.formAdd.value.TenMonAn);
     formData.append('donGia', this.formAdd.value.DonGia);
-    formData.append('donViTinh', this.formAdd.value.DonViTinh);
     formData.append('danhsachNguyenlieu', this.formAdd.value.DanhsachNguyenlieu);
+    formData.append('donViTinh', this.formAdd.value.DonViTinh);
     formData.append('HinhAnh', this.file);
     formData.append('DanhsachNguyenlieu', '')
     if (this.detailMonAn) {
