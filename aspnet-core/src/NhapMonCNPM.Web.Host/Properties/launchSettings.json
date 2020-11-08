@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:21021/",
+      "applicationUrl": "http://26.175.144.26:21021/",
       "sslPort": 0
     }
   },
@@ -18,11 +18,11 @@
     "NhapMonCNPM.Web.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:21021",
+      "launchUrl": "http://26.175.144.26:21021",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:21021/"
+      "applicationUrl": "http://26.175.144.26:21021/"
     }
   }
 }

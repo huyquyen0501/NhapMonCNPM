@@ -15,6 +15,6 @@ namespace NhapMonCNPM.QuanlyMonAn.DTO
         public double DonGia { get; set; }
         public DonViTinh DonViTinh { get; set; }
         public IFormFile HinhAnh { get; set; }
-        public List<long> DanhsachNguyenlieu { get; set; }
+        public List<IdNguyenLieuVaSoLuong> DanhsachNguyenlieu { get; set; }
     }
 }
