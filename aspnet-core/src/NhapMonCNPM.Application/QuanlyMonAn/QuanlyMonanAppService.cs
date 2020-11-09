@@ -104,5 +104,20 @@ namespace NhapMonCNPM.QuanlyMonAn
             }
             await WorkScope.InsertRangeAsync(chitietMonan);
         }
+
+        public async Task XoaMonAn(SuaMonAn input)
+        {
+            var MonAn = await WorkScope.GetAll<MonAn>().Where(s => s.Id == input.id).FirstOrDefaultAsync();
+
+            var ChitietMonAnOldData = await WorkScope.GetAll<ChiTietMonAn>().Where(s => s.MaMonAn == input.id)
+                .ToListAsync();
+         
+            foreach (var i in ChitietMonAnOldData)
+            {
+                await WorkScope.DeleteAsync(i);
+            }
+
+            await WorkScope.DeleteAsync(MonAn);
+        }
     }
 }
