@@ -14,6 +14,9 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 import { SharedModule } from '@shared/shared.module';
 import { HomeComponent } from '@app/home/home.component';
 import { AboutComponent } from '@app/about/about.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSelectModule} from "@angular/material/select";
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
@@ -93,8 +96,12 @@ import { ConfigNguyenLieuComponent } from './quan-ly-mon-an/config-nguyen-lieu/c
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
-  providers: [],
+  providers: [
+  ],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,
