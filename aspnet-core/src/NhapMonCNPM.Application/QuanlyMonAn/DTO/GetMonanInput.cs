@@ -2,6 +2,7 @@
 using NhapMonCNPM.Paging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace NhapMonCNPM.QuanlyMonAn.DTO
@@ -9,7 +10,9 @@ namespace NhapMonCNPM.QuanlyMonAn.DTO
     public class GetMonanInput
     {
         public GridParam gridParam { get; set; }
+        
         public string tenMonan { get; set; }
+        
         public double? dongia { get; set; }
         public string nguyenlieu { get; set; }
     }

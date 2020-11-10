@@ -42,17 +42,20 @@ export class AddEditMonComponent implements OnInit {
         DonGia: ['', Validators.required],
         DonViTinh: ['', Validators.required],
         DanhsachNguyenlieu: ['', Validators.required],
+        
       })
     } else {
       this.formAdd = this.fb.group({
         TenMonAn: [this.detailMonAn.tenMonan],
-        DonGia: [this.detailMonAn.giaMon],
+        DonGia: [this.detailMonAn.giaMon],     
+        
         DonViTinh: [this.detailMonAn.donViTinh, Validators.required],
         DanhsachNguyenlieu: ['', Validators.required],
       })
       if (this.detailMonAn.hinhAnh != null) {
         this.imgsrc = this.detailMonAn.hinhAnh
       }
+      console.log(this.formAdd.value.donGia);
     }
   }
 
@@ -70,6 +73,24 @@ export class AddEditMonComponent implements OnInit {
   }
 
   save() {
+    
+    
+    if(this.formAdd.value.TenMonAn==''){
+      abp.message.error('Bạn chưa điền tên món ăn');
+      
+    }else
+    if(this.formAdd.value.DonGia=='' || (this.formAdd.value.DonGia<=0)){
+      abp.message.error('Bạn chưa nhập đơn giá hoặc đơn giá nhỏ hơn = 0');
+    }else
+    if(this.formAdd.value.DonViTinh == ''){
+      abp.message.error('Bạn chưa chọn đơn vị tính');
+    }else if(this.file==undefined){
+      abp.message.error('Bạn chưa đăng ảnh món ăn')
+    }
+    else{
+     
+      
+      
     const formData = new FormData();
     formData.append('tenMonAn', this.formAdd.value.TenMonAn);
     formData.append('donGia', this.formAdd.value.DonGia);
@@ -94,7 +115,7 @@ export class AddEditMonComponent implements OnInit {
       }, r => {
 
       })
-    }
+    }}
   }
 
 }
