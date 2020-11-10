@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NguyenLieuService } from '@app/api/nguyen-lieu.service';
 import { QuanLyMonAnService } from '@app/api/quan-ly-mon-an.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -18,6 +19,8 @@ export class AddEditMonComponent implements OnInit {
   nguyenLieu: any;
   donViTinh: any;
   file: any;
+  nguyenLieus: any;
+  dsNguyenLieu: any = [];
   dsDV = [
     { text: 'Đĩa', value: 1 },
     { text: 'Bắt', value: 2 },
@@ -30,18 +33,21 @@ export class AddEditMonComponent implements OnInit {
 
   constructor(
     private api: QuanLyMonAnService,
+    private apiNguyenLieu: NguyenLieuService,
     public domFile: DomSanitizer,
     public bsModalRef: BsModalRef,
     private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.getNguyenLieu();
     if (this.detailMonAn === undefined) {
       this.formAdd = this.fb.group({
         TenMonAn: ['', Validators.required],
         DonGia: ['', Validators.required],
         DonViTinh: ['', Validators.required],
         DanhsachNguyenlieu: ['', Validators.required],
+        nguyenLieus: ['',Validators.required]
       })
     } else {
       this.formAdd = this.fb.group({
@@ -49,11 +55,17 @@ export class AddEditMonComponent implements OnInit {
         DonGia: [this.detailMonAn.giaMon],
         DonViTinh: [this.detailMonAn.donViTinh, Validators.required],
         DanhsachNguyenlieu: ['', Validators.required],
+        nguyenLieus: ['',Validators.required]
       })
       if (this.detailMonAn.hinhAnh != null) {
         this.imgsrc = this.detailMonAn.hinhAnh
       }
     }
+  }
+  getNguyenLieu(){
+    this.apiNguyenLieu.DanhSachNguyenLieuNoPaging().subscribe(data => {
+      this.dsNguyenLieu = data.result;
+    })
   }
 
   fileChange(e) {

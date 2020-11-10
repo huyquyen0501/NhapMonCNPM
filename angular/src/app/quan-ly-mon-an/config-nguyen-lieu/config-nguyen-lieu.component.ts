@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { NguyenLieuService } from '@app/api/nguyen-lieu.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-config-nguyen-lieu',
@@ -10,20 +11,22 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 export class ConfigNguyenLieuComponent implements OnInit {
 
   title: string;
-  dsNguyenLieu: any;
+  dsNguyenLieu: any = [];
   detail: any;
-  dsNguyenLieuBanDau: any
-  dsNguyenLieuView: any
+  dsNguyenLieuBanDau: any = [];
+  dsNguyenLieuView: any = [];
 
   constructor(
     private api: NguyenLieuService,
-    public bsModalRef: BsModalRef
-  ) { }
+    public bsModalRef: BsModalRef,
+  ) {
+   }
 
   ngOnInit(): void {
     this.dsNguyenLieuBanDau = this.detail.danhsachNguyenLieu.map(x =>
       x['value'] = true
     )
+    console.log(this.dsNguyenLieuBanDau)
     this.api.DanhSachNguyenLieuNoPaging().subscribe(data => {
       this.dsNguyenLieu = data.result;
       this.dsNguyenLieu.map(x =>
@@ -31,9 +34,22 @@ export class ConfigNguyenLieuComponent implements OnInit {
       )
     })
   }
+  getdsNL() {
+    this.dsNguyenLieu.forEach(s => {
+      this.detail.danhsachNguyenLieu.forEach(x => {
+        if(s.tenNguyenLieu == x.tenNguyenLieu){
+          let item = {
+            id: s.id,
+            tenNguyenLieu: s.tenNguyenLieu,
+            soLuong: x.soLuong
+          }
+        }
+      })
+    })
+  }
 
   save() {
-
+   let dialog = MAT_DIALOG_DATA;
   }
 
 }
