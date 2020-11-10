@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using NhapMonCNPM.Helper.MyUploadFile;
 using NhapMonCNPM.Constants;
+using Abp.UI;
 
 namespace NhapMonCNPM.QuanlyMonAn
 {
@@ -22,6 +23,7 @@ namespace NhapMonCNPM.QuanlyMonAn
 
         public async Task<GridResult<GetMonanOutput>> DanhSachMonAn(GetMonanInput input)
         {
+            
             var query = WorkScope.GetRepo<ChiTietMonAn>().GetAllIncluding(s => s.MonAn, k => k.NguyenLieu)
                 .WhereIf(!input.tenMonan.IsNullOrWhiteSpace(), s => s.MonAn.TenMonAn.Contains(input.tenMonan, StringComparison.OrdinalIgnoreCase))
                 .WhereIf(input.dongia.HasValue, s => s.MonAn.DonGia >= input.dongia)
@@ -56,10 +58,18 @@ namespace NhapMonCNPM.QuanlyMonAn
 
         public async Task ThemMonAn([FromForm] ThemMonan input)
         {
+            if(input.DonGia <= 0|| !input.DonGia.HasValue)
+            {
+                throw new UserFriendlyException("Giá món ăn không được nhỏ hơn hoặc bằng 0");
+            }
+            if (input.TenMonAn.IsNullOrWhiteSpace())
+            {
+                throw new UserFriendlyException("Tên món ăn không được để trống");
+            }
             var resual = new MonAn
             {
                 TenMonAn = input.TenMonAn,
-                DonGia = input.DonGia,
+                DonGia = input.DonGia??0,
                 DonViTinh = input.DonViTinh,
             };
 
@@ -88,9 +98,17 @@ namespace NhapMonCNPM.QuanlyMonAn
 
         public async Task SuaMonAn([FromForm] SuaMonAn input)
         {
+            if (input.DonGia <= 0)
+            {
+                throw new UserFriendlyException("Giá món ăn không được nhỏ hơn =0");
+            }
+            if (input.TenMonAn.IsNullOrWhiteSpace())
+            {
+                throw new UserFriendlyException("Tên món ăn không được để trống");
+            }
             var MonAn = await WorkScope.GetAll<MonAn>().Where(s => s.Id == input.id).FirstOrDefaultAsync();
             MonAn.TenMonAn = input.TenMonAn;
-            MonAn.DonGia = input.DonGia;
+            MonAn.DonGia = input.DonGia??0;
             MonAn.DonViTinh = input.DonViTinh;
             string fileLocation = UploadFile.CreateFolderIfNotExists(ConstantVarible.wwwRootFolder, "Images");
             string fileName = await UploadFile.UploadAsync(fileLocation, input.HinhAnh);
