@@ -26,19 +26,22 @@ export class ConfigNguyenLieuComponent implements OnInit {
   ngOnInit(): void {
     
     let a;
-     this.apiQLMA.chiTietMonAn(this.detail.id).subscribe(s=>{a=s.result.danhsachNguyenLieu,console.log('aaa',s.result.danhsachNguyenLieu);
+     this.apiQLMA.chiTietMonAn(this.detail.id).subscribe(s=>{a=s.result?.danhsachNguyenLieu
     this.dsNguyenLieuBanDau = a
     
     
     this.api.DanhSachNguyenLieuNoPaging().subscribe(data => {
       this.dsNguyenLieu = data.result;
+    console.log('dsnguyenlieu',this.dsNguyenLieu);
+    console.log('dsnguyenlieubandau',this.dsNguyenLieuBanDau);
+    
     
       
       this.dsNguyenLieu.forEach(x =>
-        this.dsNguyenLieuBanDau.forEach(y => {
-          if(x.maNguyenLieu == y.maNguyenLieu){
+        (this.dsNguyenLieuBanDau==null?[]:this.dsNguyenLieuBanDau).forEach(y => {
+          if(x.maNguyenLieu == y?.maNguyenLieu){
             x.value = true;
-            x.soLuong= y.soLuong
+            x.soLuong= y?.soLuong
           }
         })
       )

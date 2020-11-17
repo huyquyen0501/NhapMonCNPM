@@ -23,21 +23,33 @@ namespace NhapMonCNPM.QuanlyMonAn
 
         public async Task<GridResult<GetMonanOutput>> DanhSachMonAn(GetMonanInput input)
         {
-            
-            var query = WorkScope.GetRepo<ChiTietMonAn>().GetAllIncluding(s => s.MonAn, k => k.NguyenLieu)
-                .WhereIf(!input.tenMonan.IsNullOrWhiteSpace(), s => s.MonAn.TenMonAn.Contains(input.tenMonan, StringComparison.OrdinalIgnoreCase))
-                .WhereIf(input.dongia.HasValue, s => s.MonAn.DonGia >= input.dongia)
-                .WhereIf(!input.nguyenlieu.IsNullOrWhiteSpace(), s => s.NguyenLieu.TenNguyenLieu.Contains(input.nguyenlieu, StringComparison.OrdinalIgnoreCase))
-                .GroupBy(s => s.MonAn.Id)
-                .Select(s => new GetMonanOutput
-                {
-                    DanhsachNguyenLieu = s.Select(k=> new DanhSachNguyenLieu { SoLuong=k.SoLuong,MaNguyenLieu=k.MaNguyenLieu,TenNguyenLieu=k.NguyenLieu.TenNguyenLieu}),
-                    GiaMon = s.FirstOrDefault().MonAn.DonGia,
-                    HinhAnh = s.FirstOrDefault().MonAn.HinhAnh,
-                    id = s.Key,
-                    tenMonan = s.FirstOrDefault().MonAn.TenMonAn,
-                    DonViTinh=s.FirstOrDefault().MonAn.DonViTinh
-                }).AsQueryable();
+
+            var query = (from s in WorkScope.GetAll<MonAn>()
+                .WhereIf(!input.tenMonan.IsNullOrWhiteSpace(), s => s.TenMonAn.Contains(input.tenMonan, StringComparison.OrdinalIgnoreCase))
+                .WhereIf(input.dongia.HasValue, s => s.DonGia >= input.dongia)
+                        join k in WorkScope.GetRepo<ChiTietMonAn>().GetAllIncluding(s=>s.NguyenLieu)
+                        on s.Id equals k.MaMonAn into temped
+                        from i in temped.DefaultIfEmpty()
+                        select new GetMonanOutput
+                        {
+                            DanhsachNguyenLieu = temped.Select(k => new DanhSachNguyenLieu { SoLuong = k.SoLuong, MaNguyenLieu = k.MaNguyenLieu, TenNguyenLieu = k.NguyenLieu.TenNguyenLieu }),
+                            GiaMon = s.DonGia,
+                            HinhAnh = s.HinhAnh,
+                            id = s.Id,
+                            tenMonan = s.TenMonAn,
+                            DonViTinh = s.DonViTinh
+                        })
+                        .WhereIf(!input.nguyenlieu.IsNullOrEmpty(),s=>(s.DanhsachNguyenLieu.Select(k=>k.TenNguyenLieu)).Contains(input.nguyenlieu)).AsEnumerable()
+                        .GroupBy(s=>s.id).Select(s=> new GetMonanOutput
+                        {
+                            DanhsachNguyenLieu=s.FirstOrDefault().DanhsachNguyenLieu,
+                            DonViTinh=s.FirstOrDefault().DonViTinh,
+                            GiaMon=s.FirstOrDefault().GiaMon,
+                            HinhAnh=s.FirstOrDefault().HinhAnh,
+                            id=s.Key,
+                            tenMonan=s.FirstOrDefault().tenMonan
+                        })
+                        .AsQueryable();
             return query.GetGridResultSync(query, input.gridParam);
         }
         [HttpGet]
