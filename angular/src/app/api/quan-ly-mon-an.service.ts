@@ -23,4 +23,11 @@ export class QuanLyMonAnService extends BaseApiService {
   Add(input: FormData): Observable<any> {
     return this.http.post(this.rootUrl + '/ThemMonAn', input)
   }
+  
+  capNhatNguyenLieu(data: any): Observable<any>{
+    return this.http.post(`${this.rootUrl}/CapNhatNguyenLieu`, data);
+  }
+  chiTietMonAn(id: number): Observable<any>{
+    return this.http.get(`${this.rootUrl}/ChiTietMonAn?Id=${id}`,);
+  }
 }

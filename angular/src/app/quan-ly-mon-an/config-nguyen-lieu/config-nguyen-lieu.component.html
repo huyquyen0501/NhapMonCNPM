@@ -1,13 +1,13 @@
 <div style="padding: 20px;" *ngIf="dsNguyenLieu">
     <h4>Thêm/sửa nguyên liệu</h4>
     <hr>
-    <div style="margin-top: 30px;" *ngFor="let data of dsNguyenLieu">
+    <div style="margin-top: 30px;" *ngFor="let data of dsNguyenLieu;let i = index">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
-                <input type="checkbox" />
+                <input type="checkbox" name="{{i}}_checkbox" [(ngModel)]="data.value" />
                 {{data.tenNguyenLieu}}
             </div>
-            <input style="width: 80%;" type="number" placeholder="Nhập Số lượng">
+            <input style="width: 80%;" type="number" name="{{i}}_soLuong" [(ngModel)]="data.soLuong" placeholder="Nhập Số lượng">
         </div>
     </div>
     <div style="margin-top: 30px; display: flex; justify-content: flex-end; align-items: center;">

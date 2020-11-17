@@ -84,7 +84,7 @@ export class AddEditMonComponent implements OnInit {
     }else
     if(this.formAdd.value.DonViTinh == ''){
       abp.message.error('Bạn chưa chọn đơn vị tính');
-    }else if(this.file==undefined){
+    }else if(this.file===undefined){
       abp.message.error('Bạn chưa đăng ảnh món ăn')
     }
     else{
