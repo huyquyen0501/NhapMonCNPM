@@ -40,6 +40,7 @@ namespace NhapMonCNPM.QuanlyMonAn
                 }).AsQueryable();
             return query.GetGridResultSync(query, input.gridParam);
         }
+        [HttpGet]
         public async Task<GetMonanOutput> ChiTietMonAn(long Id)
         {
             return await WorkScope.GetRepo<ChiTietMonAn>().GetAllIncluding(s => s.MonAn, k => k.NguyenLieu)
@@ -115,15 +116,20 @@ namespace NhapMonCNPM.QuanlyMonAn
             MonAn.HinhAnh = $"{ConstantVarible.RootUrl}Images/{fileName}";
             await WorkScope.UpdateAsync(MonAn);
 
-            var ChitietMonAnOldData = await WorkScope.GetAll<ChiTietMonAn>().Where(s => s.MaMonAn == input.id)
+            
+        }
+        [HttpPost]
+        public async Task CapNhatNguyenLieu(CapNhatNguyenLieuDto input)
+        {
+            var ChitietMonAnOldData = await WorkScope.GetAll<ChiTietMonAn>().Where(s => s.MaMonAn == input.IdMonAn)
                 .ToListAsync();
             var ChitietMonAn = ChitietMonAnOldData.Select(s => s.MaNguyenLieu).ToList();
-            var danhsachIdInput = input.DanhsachNguyenlieu.Select(s => s.IdNguyenLieu).ToList();
+            var danhsachIdInput = input.DanhSachNguyenLieu.Where(s=>s.SoLuong>0).Select(s => s.MaNguyenLieu).ToList();
             //ChitietMonAn = ChitietMonAn.FindAll();
             var ThemMoi = danhsachIdInput.Except(ChitietMonAn);
             var XoaDi = ChitietMonAn.Except(danhsachIdInput);
             //Sua nguyen lieu
-            
+
 
             foreach (var i in ChitietMonAnOldData)
             {
@@ -134,16 +140,16 @@ namespace NhapMonCNPM.QuanlyMonAn
             }
             var chitietMonanThemVao = new List<ChiTietMonAn>();
             foreach (var i in ThemMoi)
-                foreach (var j in input.DanhsachNguyenlieu)
+                foreach (var j in input.DanhSachNguyenLieu)
                 {
                     {
-                        if (i == j.IdNguyenLieu)
+                        if (i == j.MaNguyenLieu)
                         {
                             var chitiet = new ChiTietMonAn
                             {
-                                MaMonAn = input.id,
+                                MaMonAn = input.IdMonAn,
                                 MaNguyenLieu = i,
-                                SoLuong =j.SoLuong
+                                SoLuong = j.SoLuong
                             };
                             chitietMonanThemVao.Add(chitiet);
                         }
@@ -152,12 +158,12 @@ namespace NhapMonCNPM.QuanlyMonAn
             await WorkScope.InsertRangeAsync(chitietMonanThemVao);
             //Sua nguyen lieu
             var danhSachSua = ChitietMonAn.Except(XoaDi);
-            var DanhSachInputLaSua = input.DanhsachNguyenlieu.Where(s => danhSachSua.Contains(s.IdNguyenLieu)).ToList();
-            foreach(var i in DanhSachInputLaSua)
+            var DanhSachInputLaSua = input.DanhSachNguyenLieu.Where(s => danhSachSua.Contains(s.MaNguyenLieu)).ToList();
+            foreach (var i in DanhSachInputLaSua)
             {
-                foreach(var j in ChitietMonAnOldData)
+                foreach (var j in ChitietMonAnOldData)
                 {
-                    if(i.IdNguyenLieu == j.MaNguyenLieu)
+                    if (i.MaNguyenLieu == j.MaNguyenLieu)
                     {
                         j.SoLuong = i.SoLuong;
                     }

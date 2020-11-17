@@ -18,9 +18,9 @@ namespace NhapMonCNPM.QuanLyNguyenLieu
     public class QuanLyNguyenLieuAppService:NhapMonCNPMAppServiceBase
     {
         [HttpGet]
-        public async Task<List<NameAndId>> DanhSachNguyenLieuNoPaging()
+        public async Task<List<DanhSachNguyenLieu>> DanhSachNguyenLieuNoPaging()
         {
-            return await WorkScope.GetAll<NguyenLieu>().Select(s => new NameAndId { Id = s.Id, TenNguyenLieu = s.TenNguyenLieu }).ToListAsync();
+            return await WorkScope.GetAll<NguyenLieu>().Select(s => new DanhSachNguyenLieu { MaNguyenLieu = s.Id, TenNguyenLieu = s.TenNguyenLieu }).ToListAsync();
         }
         public async Task ThemNguyenLieu(ThemNguyenLieu input)
         {
